@@ -1,1271 +1,2710 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Arts Academy | Admission</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        /* -------------------------------------------------------------------------- */
-        /*                                 DESIGN TOKENS                               */
-        /* -------------------------------------------------------------------------- */
-        :root {
-            /* Palette */
-            --primary: #4F46E5;       
-            --primary-dark: #4338ca; 
-            --primary-light: #EEF2FF; 
-            --primary-glow: rgba(67, 56, 202, 0.15);
-            
-            --success: #10B981;
-            --success-light: #D1FAE5;
-            --error: #DC2626; 
-            --error-bg: #FEF2F2;
-            
-            /* Surfaces */
-            --surface: #ffffff;
-            --bg-body: #F8FAFC;       
-            
-            /* Typography */
-            --font-family: 'Plus Jakarta Sans', sans-serif;
-            --font-weight-heading: 800;
-            --font-weight-body: 500;
-            --font-weight-input: 600;
-            --font-weight-label: 500;
-            
-            --text-main: #0F172A;     
-            --text-sub: #475569;      
-            --text-muted: #94A3B8;    
-            --placeholder-color: #CBD5E1; 
-
-            /* Inputs */
-            --input-bg: #ffffff;
-            --input-border: #E2E8F0;
-            --input-radius: 16px;
-            --input-height: 56px;
-
-            /* Animation */
-            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
-            --bouncy: cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*                                 RESET & BASE                               */
-        /* -------------------------------------------------------------------------- */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body {
-            font-family: var(--font-family);
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            padding-bottom: 140px;
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            
-            /* ADDED: Make all text unselectable */
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        /* ADDED: Re-enable selection specifically for input entries */
-        input, textarea, select {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
-
-        /* Background */
-        .bg-gradient {
-            position: fixed;
-            top: -5%;
-            right: -10%;
-            width: 80vw;
-            height: 80vw;
-            background: radial-gradient(circle, rgba(79, 70, 229, 0.06) 0%, rgba(255,255,255,0) 70%);
-            z-index: -1;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*                                 HEADER                                      */
-        /* -------------------------------------------------------------------------- */
-        .app-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 14px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .brand-group { display: flex; align-items: center; gap: 12px; }
-
-        .logo-container {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            border-radius: 10px;
-            display: grid;
-            place-items: center;
-            color: white;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
-        }
-
-        .brand-info h1 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin: 0;
-            line-height: 1.1;
-            color: var(--text-main);
-        }
-        .brand-info p {
-            font-size: 0.75rem;
-            margin: 0;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .call-btn {
-            background: var(--text-main);
-            color: white;
-            text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease;
-        }
-        .call-btn:active { transform: scale(0.95); }
-
-        /* -------------------------------------------------------------------------- */
-        /*                                 MAIN LAYOUT                                */
-        /* -------------------------------------------------------------------------- */
-        .container {
-            max-width: 580px;
-            margin: 0 auto;
-            padding: 24px 20px;
-            animation: fadeIn 0.6s var(--ease-out-quart);
-        }
-
-        /* Hero */
-        .hero-text { 
-            text-align: center; 
-            margin-bottom: 40px; 
-            position: relative;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 48px 28px;
-            border-radius: 32px;
-            box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 1);
-            overflow: hidden;
-        }
-        
-        .hero-text::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(79, 70, 229, 0.04) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            background: #F8FAFC;
-            color: var(--primary);
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 24px;
-            border:1px solid rgba(79, 70, 229, 0.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .status-dot {
-            width: 6px; height: 6px;
-            background: var(--success);
-            border-radius: 50%;
-            margin-right: 8px;
-            box-shadow: 0 0 0 2px var(--success-light);
-            animation: pulse 2s infinite;
-        }
-
-        .heading-main {
-            font-size: 2.25rem;
-            font-weight: var(--font-weight-heading);
-            margin: 0 0 16px 0;
-            letter-spacing: -0.03em;
-            color: var(--text-main);
-            line-height: 1.1;
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, var(--text-main) 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-subtitle {
-            font-size: 1rem;
-            color: var(--text-sub);
-            margin: 0;
-            line-height: 1.6;
-            max-width: 420px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: var(--font-weight-body);
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*                                 CARDS                                      */
-        /* -------------------------------------------------------------------------- */
-        .form-card {
-            background: var(--surface);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.04);
-            border: 1px solid rgba(255,255,255,0.6);
-            animation: slideUp 0.6s var(--ease-out-quart) forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .form-card:nth-child(2) { animation-delay: 0.1s; }
-        .form-card:nth-child(3) { animation-delay: 0.2s; }
-        .form-card:nth-child(4) { animation-delay: 0.3s; }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px dashed #E2E8F0;
-        }
-
-        .card-icon {
-            width: 34px;
-            height: 34px;
-            background: #F8FAFC;
-            border-radius: 10px;
-            display: grid;
-            place-items: center;
-            color: var(--primary);
-        }
-
-        .card-title {
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--text-main);
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*                                 INPUTS (WITH SMART PLACEHOLDERS)            */
-        /* -------------------------------------------------------------------------- */
-        .input-group {
-            position: relative;
-            margin-bottom: 12px;
-            background: var(--input-bg);
-            border: 2px solid var(--input-border);
-            border-radius: var(--input-radius);
-            display: flex;
-            align-items: center;
-            transition: all 0.3s var(--ease-out-quart);
-            height: var(--input-height);
-        }
-
-        /* Icon */
-        .input-icon {
-            width: 48px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            transition: all 0.3s var(--ease-out-quart);
-        }
-
-        /* Input Element */
-        .modern-input {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            font-family: var(--font-family);
-            font-size: 1rem;
-            font-weight: var(--font-weight-input);
-            color: var(--text-main);
-            background: transparent;
-            border: none;
-            outline: none;
-            z-index: 2;
-        }
-
-        /* Smart Placeholder Logic */
-        .modern-input::placeholder {
-            color: var(--placeholder-color);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        /* Show placeholder ONLY when focused or label is floated */
-        .input-group:focus-within .modern-input::placeholder {
-            opacity: 1;
-        }
-
-        /* Floating Label */
-        .floating-label {
-            position: absolute;
-            left: 48px;
-            top: 50%;
-            transform: translateY(-50%) scale(1);
-            background: transparent;
-            padding: 0 4px;
-            color: var(--text-sub);
-            font-size: 1rem;
-            font-weight: var(--font-weight-label);
-            pointer-events: none;
-            transition: all 0.25s var(--bouncy);
-            z-index: 3;
-            transform-origin: left center;
-        }
-
-        /* Valid Icon */
-        .valid-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 12px;
-            display: grid;
-            place-items: center;
-            color: var(--success);
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.4s var(--bouncy);
-        }
-
-        /* ================= FOCUS STATE ================= */
-        .input-group:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-glow);
-            background: #ffffff;
-        }
-
-        .input-group:focus-within .input-icon {
-            color: var(--primary);
-            transform: scale(1.1);
-        }
-
-        /* Move label up on focus or valid content */
-        .input-group:focus-within .floating-label,
-        .input-group:not(:placeholder-shown) .floating-label {
-            top: 0;
-            left: 16px;
-            transform: translateY(-50%) scale(0.85);
-            background: var(--surface);
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        /* ================= VALID STATE ================= */
-        .input-group.is-valid {
-            border-color: var(--success);
-        }
-        
-        .input-group.is-valid .valid-icon {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        .input-group.is-valid .floating-label {
-            color: var(--success);
-        }
-
-        /* ================= ERROR STATE ================= */
-        .input-group.is-error {
-            border-color: var(--error);
-            background: var(--error-bg);
-            animation: shake 0.4s ease;
-        }
-
-        .input-group.is-error .input-icon {
-            color: var(--error);
-        }
-
-        .input-group.is-error .floating-label {
-            color: var(--error);
-        }
-
-        /* ================= ERROR MSG ================= */
-        .error-msg {
-            display: block;
-            height: 0;
-            overflow: hidden;
-            color: var(--error);
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding-left: 54px;
-            margin-top: 2px;
-            margin-bottom: 0;
-            transition: height 0.3s ease, margin-bottom 0.3s ease, opacity 0.3s ease;
-            opacity: 0;
-        }
-
-        .input-group.is-error + .error-msg {
-            height: 20px;
-            margin-bottom: 20px;
-            opacity: 1;
-        }
-
-        /* ================= DATE PICKER SPECIFIC STYLING ================= */
-        input[type="date"] {
-            -webkit-appearance: none; 
-            -moz-appearance: none;
-            background: transparent; 
-            color-scheme: light; 
-        }
-        
-        /* Hide the default browser calendar icon */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            background: transparent;
-            bottom: 0;
-            color: transparent;
-            cursor: pointer;
-            height: auto;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: auto;
-        }
-
-        /* Specific Input Tweaks */
-        select.modern-input {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 20px;
-            padding-right: 40px;
-        }
-        
-        select.modern-input:focus-within {
-             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234F46E5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*                                 SUBJECTS (WRAPPED)                         */
-        /* -------------------------------------------------------------------------- */
-        .subject-label {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 12px;
-            display: block;
-            padding-left: 4px;
-        }
-        
-        .subject-container {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
-
-        .subject-chip {
-            flex: 0 0 auto;
-            padding: 12px 20px;
-            background: white;
-            border: 1.5px solid #E2E8F0;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-sub);
-            cursor: pointer;
-            transition: all 0.3s var(--bouncy);
-            user-select: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .subject-chip svg {
-            opacity: 0;
-            transform: scale(0) rotate(-15deg);
-            transition: all 0.4s var(--bouncy);
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .subject-chip.selected {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-        }
-        
-        .subject-chip.selected svg {
-            opacity: 1;
-            transform: scale(1) rotate(0);
-        }
-
-        .subject-chip:active { transform: scale(0.95); }
-
-        .subject-error {
-            height: 0;
-            overflow: hidden;
-            color: var(--error);
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding-left: 4px;
-            margin-top: 0;
-            margin-bottom: 0;
-            transition: height 0.3s ease, margin-bottom 0.3s ease, opacity 0.3s ease;
-            opacity: 0;
-        }
-
-        .subject-error.visible {
-            height: 20px;
-            margin-bottom: 20px;
-            opacity: 1;
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*                                 SUBMIT BUTTON                               */
-        /* -------------------------------------------------------------------------- */
-        .submit-wrapper {
-            position: fixed;
-            bottom: 24px;
-            left: 0;
-            width: 100%;
-            padding: 0 24px calc(24px + env(safe-area-inset-bottom));
-            z-index: 90;
-            display: flex;
-            justify-content: center;
-            pointer-events: none;
-        }
-
-        .btn-submit {
-            pointer-events: all;
-            width: 100%;
-            max-width: 540px;
-            
-            /* Authentic Premium Gradient */
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            color: white;
-            
-            /* Glass & Depth Effects */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 12px 25px -5px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            
-            padding: 18px 24px; /* Slightly taller padding */
-            font-family: var(--font-family);
-            font-size: 0.9rem;
-            font-weight: 900; 
-            text-transform: uppercase;
-            letter-spacing: 0.15em; 
-            
-            border-radius: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s var(--ease-out-quart);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none;
-        }
-
-        /* Icon Styling */
-        .btn-icon {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: transform 0.3s ease;
-        }
-
-        /* Premium Shine */
-        .btn-submit::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: skewX(-20deg);
-            transition: none;
-            opacity: 0;
-        }
-        
-        .btn-submit:hover:not(:disabled) {
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 15px 35px -5px rgba(79, 70, 229, 0.4);
-        }
-        
-        .btn-submit:hover:not(:disabled)::before {
-            animation: premium-shine 0.8s forwards;
-        }
-
-        .btn-submit:hover:not(:disabled) .btn-icon {
-            transform: translateX(3px); 
-        }
-
-        /* Active State (Touch) */
-        .btn-submit:active:not(:disabled) { 
-            transform: translateY(0) scale(0.97); 
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
-            transition: transform 0.1s;
-        }
-
-        /* Loader */
-        .loader {
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            border-top: 2px solid #fff; 
-            animation: spin-tech 0.8s linear infinite;
-            display: none;
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*                                 MODAL                                      */
-        /* -------------------------------------------------------------------------- */
-        .modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 200;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s;
-            padding: 24px;
-        }
-        .modal.active { opacity: 1; pointer-events: all; }
-
-        .modal-card {
-            background: white;
-            padding: 40px 32px;
-            border-radius: 32px;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            transform: scale(0.8) translateY(20px);
-            transition: all 0.5s var(--bouncy);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        .modal.active .modal-card { 
-            transform: scale(1) translateY(0); 
-        }
-
-        /* The Animated Icon Container */
-        .success-icon-wrapper {
-            width: 90px; height: 90px;
-            background: linear-gradient(135deg, #D1FAE5 0%, #10B981 100%);
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            margin: 0 auto 24px;
-            color: #ffffff;
-            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
-            position: relative;
-            transition: background 0.3s;
-        }
-
-        /* Error State styles */
-        .modal-card.error .success-icon-wrapper {
-            background: linear-gradient(135deg, #FEE2E2 0%, #EF4444 100%);
-            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.4);
-        }
-
-        /* SVG Drawing Animation Logic */
-        .success-icon-wrapper svg {
-            width: 45px;
-            height: 45px;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100; /* Hidden initially */
-        }
-        
-        /* Error Icon (X) */
-        .icon-x { display: none; }
-        .icon-check { display: block; }
-
-        .modal-card.error .icon-check { display: none; }
-        .modal-card.error .icon-x { display: block; }
-
-        .modal.active .success-icon-wrapper svg {
-            animation: draw-check 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        /* Modal Typography */
-        .modal-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin: 0 0 12px 0;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
-        }
-        
-        .modal-msg {
-            margin: 0 0 32px 0;
-            color: var(--text-sub);
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        /* Modal Button */
-        .btn-modal {
-            width: 100%;
-            background: white;
-            color: var(--text-main);
-            border: 2px solid #E2E8F0;
-            padding: 16px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: var(--font-family);
-        }
-
-        .btn-modal:hover {
-            background: #F8FAFC;
-            border-color: #CBD5E1;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            margin-top: 40px;
-            font-weight: 500;
-            padding-bottom: 80px;
-        }
-
-        /* Spinner Class for User Logic */
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid #fff;
-            border-radius: 50%;
-            animation: spin-tech 0.8s linear infinite;
-            display: block;
-        }
-
-        /* Keyframes */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes spin-tech { to { transform: rotate(360deg); } }
-        @keyframes premium-shine {
-            0% { left: -100%; opacity: 0; }
-            50% { opacity: 1; }
-            100% { left: 200%; opacity: 0; }
-        }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            75% { transform: translateX(6px); }
-        }
-        @keyframes draw-check {
-            to { stroke-dashoffset: 0; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ND Construction Pvt Ltd | Engineered Construction in Purba Bardhaman</title>
+  <meta name="description" content="ND Construction Pvt Ltd — engineered residential construction, renovation and finishing in Burdwan, Purba Bardhaman. Engineer-supervised, milestone contracts, 5-year structural warranty. 16+ years. Founded by Babu Deyoan." />
+  <meta name="keywords" content="construction company Burdwan, builder Purba Bardhaman, ND Construction Pvt Ltd, engineer supervised construction West Bengal, residential contractor Burdwan, home renovation Goda, milestone contract construction" />
+  <meta name="robots" content="index, follow" />
+  <meta name="geo.region" content="IN-WB" />
+  <meta name="geo.placename" content="Burdwan, West Bengal, India" />
+  <meta name="author" content="ND Construction Pvt Ltd" />
+
+  <meta property="og:title" content="ND Construction Pvt Ltd | Engineered Construction in Purba Bardhaman" />
+  <meta property="og:description" content="Engineer-supervised residential construction, renovation and finishing in Burdwan. 16+ years. Milestone contracts. 5-year structural warranty." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:url" content="https://ndconstruction.in" />
+  <meta property="og:image" content="https://ndconstruction.in/assets/img7.png" />
+  <meta property="og:site_name" content="ND Construction Pvt Ltd" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ND Construction Pvt Ltd | Engineered Construction in Purba Bardhaman" />
+  <meta name="twitter:description" content="Engineer-supervised construction in Burdwan. 5-year warranty. Milestone contracts." />
+  <meta name="twitter:image" content="https://ndconstruction.in/assets/img7.png" />
+
+  <link rel="canonical" href="https://ndconstruction.in/" />
+  <link rel="icon" type="image/png" href="assets/ndcs_icon.png" />
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-N3RVF77F');</script>
+  <!-- End Google Tag Manager -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "ConstructionBusiness", "LocalBusiness"],
+    "name": "ND Construction Pvt Ltd",
+    "alternateName": "ND Construction",
+    "description": "Engineer-supervised residential construction, renovation and finishing in Burdwan and Purba Bardhaman, West Bengal. Milestone contracts, 5-year structural warranty, in-house teams.",
+    "url": "https://ndconstruction.in",
+    "telephone": "+917797725755",
+    "email": "contact@ndconstruction.in",
+    "foundingDate": "2010",
+    "founder": {
+      "@type": "Person",
+      "name": "Babu Deyoan",
+      "jobTitle": "Founder"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Goda Main Road",
+      "addressLocality": "Burdwan",
+      "addressRegion": "West Bengal",
+      "postalCode": "713103",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "23.2324",
+      "longitude": "87.8624"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "08:00",
+        "closes": "19:00"
+      }
+    ],
+    "priceRange": "₹₹₹",
+    "areaServed": [
+      {"@type": "City", "name": "Burdwan"},
+      {"@type": "City", "name": "Goda"},
+      {"@type": "City", "name": "Memari"},
+      {"@type": "City", "name": "Kalna"},
+      {"@type": "City", "name": "Katwa"},
+      {"@type": "City", "name": "Galsi"},
+      {"@type": "City", "name": "Ausgram"},
+      {"@type": "City", "name": "Durgapur"},
+      {"@type": "AdministrativeArea", "name": "Purba Bardhaman"}
+    ],
+    "knowsAbout": [
+      "Residential Construction",
+      "RCC Frame Structures",
+      "Home Renovation",
+      "Civil Engineering",
+      "Bathroom Renovation",
+      "Interior Finishing",
+      "Structural Engineering"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Construction Services",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Residential Construction", "description": "Engineer-supervised new home construction from foundation to handover"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Renovation & Remodeling", "description": "Whole-home, bathroom, kitchen and room renovations executed by in-house teams"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Interior & Exterior Finishing", "description": "Painting, tiling, flooring, false ceiling and premium surface finishes"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Maintenance & Repairs", "description": "Planned maintenance, leak repair, electrical fixes, waterproofing and post-handover support"}}
+      ]
+    },
+    "sameAs": [
+      "https://wa.me/917797725755",
+      "https://www.instagram.com/ndconstruction",
+      "https://www.facebook.com/ndconstruction"
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ============================================================
+       ND CONSTRUCTION PVT LTD — DESIGN SYSTEM
+       Mid-tier positioning. Refined. Engineered. Calm authority.
+       ============================================================ */
+    :root {
+      --clr-bg:          #faf8f4;
+      --clr-bg-alt:      #f3ede2;
+      --clr-surface:     #ffffff;
+      --clr-dark:        #14110d;
+      --clr-dark-2:      #25211a;
+      --clr-mid:         #4a4339;
+      --clr-muted:       #807769;
+      --clr-line:        #e8e2d6;
+      --clr-accent:      #c8612a;
+      --clr-accent-dark: #a14d20;
+      --clr-accent-soft: #f3e5d3;
+      --clr-green:       #1a9c4e;
+      --clr-whatsapp:    #25D366;
+      --ff-display:      'Outfit', system-ui, sans-serif;
+      --ff-body:         'Plus Jakarta Sans', system-ui, sans-serif;
+      --radius:          12px;
+      --radius-sm:       8px;
+      --shadow-sm:       0 2px 12px rgba(20,17,13,.06);
+      --shadow-md:       0 8px 32px rgba(20,17,13,.10);
+      --shadow-lg:       0 20px 60px rgba(20,17,13,.14);
+      --transition:      .35s cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; -webkit-tap-highlight-color: transparent; scroll-padding-top: 110px; }
+    body {
+      font-family: var(--ff-body);
+      background: var(--clr-bg);
+      color: var(--clr-dark);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a  { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    a, button, input, select, textarea { transition: all .2s ease; }
+
+    /* Layout */
+    .container       { width: 92%; max-width: 1180px; margin: 0 auto; }
+    .container--wide { width: 92%; max-width: 1320px; margin: 0 auto; }
+    .section         { padding: 100px 0; }
+    .section--tight  { padding: 70px 0; }
+    .section--dark   { background: var(--clr-dark); color: #fff; }
+    .section--dark-2 { background: var(--clr-dark-2); color: #fff; }
+    .section--warm   { background: var(--clr-bg-alt); }
+    .section--white  { background: var(--clr-surface); }
+
+    /* Typography */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 16px;
+    }
+    .tag::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--clr-accent);
+    }
+    .section--dark .tag, .section--dark-2 .tag { color: #e89a6a; }
+    .section--dark .tag::before, .section--dark-2 .tag::before { background: #e89a6a; }
+
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.9rem, 4.5vw, 3.1rem);
+      line-height: 1.12;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 18px;
+    }
+    .section-title em { font-style: normal; color: var(--clr-accent); }
+    .section--dark .section-title, .section--dark-2 .section-title { color: #fff; }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--clr-muted);
+      line-height: 1.7;
+      max-width: 600px;
+    }
+    .section--dark .section-sub, .section--dark-2 .section-sub { color: rgba(255,255,255,.65); }
+
+    .section-header         { margin-bottom: 60px; }
+    .section-header--center { text-align: center; }
+    .section-header--center .section-sub { margin: 0 auto; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 15px 28px;
+      border-radius: 6px;
+      font-family: var(--ff-body);
+      font-size: .95rem;
+      font-weight: 600;
+      letter-spacing: .01em;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: var(--transition);
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active { transform: scale(.97); }
+    .btn--primary {
+      background: var(--clr-accent);
+      color: #fff;
+      border-color: var(--clr-accent);
+    }
+    .btn--primary:hover {
+      background: var(--clr-accent-dark);
+      border-color: var(--clr-accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(200,97,42,.32);
+    }
+    .btn--whatsapp {
+      background: var(--clr-whatsapp);
+      color: #fff;
+      border-color: var(--clr-whatsapp);
+    }
+    .btn--whatsapp:hover { background: #1eb857; border-color: #1eb857; transform: translateY(-2px); }
+    .btn--outline {
+      background: transparent;
+      color: var(--clr-dark);
+      border-color: var(--clr-dark);
+    }
+    .btn--outline:hover { background: var(--clr-dark); color: #fff; }
+    .btn--outline-light {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,.45);
+    }
+    .btn--outline-light:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+    .btn--ghost {
+      background: transparent;
+      color: var(--clr-accent);
+      border-color: transparent;
+      padding: 12px 0;
+    }
+    .btn--ghost:hover { color: var(--clr-accent-dark); }
+    .btn--lg { padding: 18px 34px; font-size: 1.02rem; }
+    .btn--sm { padding: 10px 18px; font-size: .85rem; }
+
+    /* ============================================================
+       UTILITY BAR
+       ============================================================ */
+    .utility-bar {
+      background: var(--clr-dark);
+      color: rgba(255,255,255,.7);
+      font-size: .8rem;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .utility-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .utility-left { display: flex; gap: 22px; flex-wrap: wrap; }
+    .utility-item { display: inline-flex; align-items: center; gap: 7px; }
+    .utility-item a { color: rgba(255,255,255,.85); }
+    .utility-item a:hover { color: #fff; }
+    .utility-item i { color: var(--clr-accent); font-size: .8rem; }
+    .utility-cta { color: #fff; font-weight: 600; }
+    .utility-cta:hover { color: var(--clr-accent); }
+
+    /* ============================================================
+       NAVBAR
+       ============================================================ */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(250,248,244,.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: all .3s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(250,248,244,.99);
+      border-bottom-color: var(--clr-line);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-mark {
+      width: 44px; height: 44px;
+      background: var(--clr-dark);
+      color: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .logo-text {
+      font-family: var(--ff-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--clr-dark);
+      line-height: 1.1;
+    }
+    .logo-text span { display: block; font-size: .68rem; font-weight: 500; color: var(--clr-muted); letter-spacing: .08em; text-transform: uppercase; margin-top: 2px; }
+
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: .92rem;
+      font-weight: 500;
+      color: var(--clr-mid);
+      position: relative;
+      padding: 6px 0;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--clr-accent);
+      transition: width .3s ease;
+    }
+    .nav-links a:hover { color: var(--clr-dark); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { display: flex; gap: 10px; align-items: center; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-line);
+      position: relative;
+      z-index: 1001;
+    }
+    .hamburger span {
+      width: 22px; height: 2px;
+      background: var(--clr-dark);
+      border-radius: 2px;
+      transition: all .3s ease;
+      position: absolute;
+    }
+    .hamburger span:nth-child(1) { top: 14px; }
+    .hamburger span:nth-child(2) { top: 21px; }
+    .hamburger span:nth-child(3) { top: 28px; }
+    .hamburger.active span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+    /* Mobile Nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--clr-bg);
+      z-index: 1000;
+      padding: 100px 28px 32px;
+      flex-direction: column;
+      gap: 0;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .35s ease;
+    }
+    .mobile-nav.open { opacity: 1; visibility: visible; }
+    .mobile-nav a.menu-link {
+      font-family: var(--ff-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--clr-dark);
+      padding: 18px 0;
+      border-bottom: 1px solid var(--clr-line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mobile-nav a.menu-link:hover, .mobile-nav a.menu-link.active {
+      color: var(--clr-accent);
+    }
+    .mobile-nav-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .mobile-nav-buttons .btn { justify-content: center; padding: 16px 20px; }
+    .mobile-nav-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--clr-line);
+      text-align: center;
+      color: var(--clr-muted);
+      font-size: .85rem;
+    }
+    .mobile-nav-contact {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .mobile-nav-contact a {
+      width: 44px; height: 44px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-line);
+      border-radius: 8px;
+      color: var(--clr-mid);
+    }
+    .mobile-nav-contact a:hover {
+      background: var(--clr-accent);
+      color: #fff;
+      border-color: var(--clr-accent);
+    }
+
+    @media (max-width: 980px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    #hero {
+      padding: 90px 0 100px;
+      position: relative;
+      overflow: hidden;
+      background: var(--clr-bg);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--clr-accent-soft);
+      color: var(--clr-accent-dark);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow i { font-size: .7rem; }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.025em;
+      color: var(--clr-dark);
+      margin-bottom: 22px;
+    }
+    .hero-title em { font-style: normal; color: var(--clr-accent); }
+    .hero-sub {
+      font-size: 1.08rem;
+      color: var(--clr-mid);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 520px;
+    }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-top: 28px;
+      border-top: 1px solid var(--clr-line);
+    }
+    .hero-meta-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: .88rem;
+      color: var(--clr-mid);
+    }
+    .hero-meta-item strong { color: var(--clr-dark); display: block; font-size: 1.2rem; font-family: var(--ff-display); }
+    .hero-meta-item i { color: var(--clr-accent); font-size: 1.1rem; }
+
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .hero-visual img { width: 100%; height: 100%; }
+    .hero-visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(20,17,13,.4) 0%, transparent 25%, transparent 60%, rgba(20,17,13,.7) 100%);
+    }
+    .hero-visual-caption {
+      position: absolute;
+      top: 24px; left: 24px; right: 24px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .hero-visual-caption .caption-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.95);
+      background: rgba(20,17,13,.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+    .hero-visual-caption .caption-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--clr-accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .hero-visual-caption h3 {
+      display: inline;
+      font-family: var(--ff-display);
+      font-size: .88rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #fff;
+      max-width: calc(100% - 230px);
+    }
+    .hero-visual-caption h3::before {
+      content: '—';
+      margin: 0 8px;
+      opacity: .5;
+    }
+    .hero-floating-card {
+      position: absolute;
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.18);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      z-index: 2;
+    }
+    .hero-floating-card--top {
+      top: 24px; right: 24px; left: auto;
+    }
+    .hero-floating-card--bottom {
+      bottom: 24px; right: 24px; left: auto;
+    }
+    .fc-icon {
+      width: 40px; height: 40px;
+      background: var(--clr-accent-soft);
+      color: var(--clr-accent);
+      border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .fc-text { min-width: 0; }
+    .fc-text .fc-num { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; line-height: 1.15; color: var(--clr-dark); }
+    .fc-text .fc-lab { font-size: .7rem; color: var(--clr-muted); margin-top: 2px; }
+
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { aspect-ratio: 4/3; }
+      .hero-floating-card--top, .hero-floating-card--bottom { display: none; }
+    }
+
+    /* ============================================================
+       TRUST STRIP
+       ============================================================ */
+    .trust-strip {
+      background: var(--clr-surface);
+      border-top: 1px solid var(--clr-line);
+      border-bottom: 1px solid var(--clr-line);
+      padding: 28px 0;
+    }
+    .trust-items {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--clr-mid);
+    }
+    .trust-item .ti-icon {
+      width: 38px; height: 38px;
+      background: var(--clr-accent-soft);
+      color: var(--clr-accent);
+      border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .trust-items { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+
+    /* ============================================================
+       ABOUT / FOUNDER
+       ============================================================ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--clr-bg-alt);
+    }
+    .about-visual img { width: 100%; height: 100%; object-fit: cover; }
+    .about-visual-badge {
+      position: absolute;
+      bottom: 24px; left: 24px;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(8px);
+      padding: 16px 20px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      max-width: 220px;
+    }
+    .about-visual-badge strong {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      color: var(--clr-accent);
+      display: block;
+    }
+    .about-visual-badge span {
+      font-size: .78rem;
+      color: var(--clr-muted);
+    }
+    .about-body p {
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: var(--clr-mid);
+      margin-bottom: 18px;
+    }
+    .about-body p strong { color: var(--clr-dark); }
+    .about-signature {
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid var(--clr-line);
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    .about-signature-text strong {
+      display: block;
+      font-family: var(--ff-display);
+      font-size: 1.15rem;
+      color: var(--clr-dark);
+    }
+    .about-signature-text span {
+      font-size: .85rem;
+      color: var(--clr-muted);
+    }
+    @media (max-width: 980px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ============================================================
+       SERVICES
+       ============================================================ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-line);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      transition: var(--transition);
+      position: relative;
+    }
+    .service-card:hover {
+      border-color: var(--clr-accent);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .service-num {
+      font-family: var(--ff-display);
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--clr-accent);
+      letter-spacing: .1em;
+      margin-bottom: 16px;
+    }
+    .service-icon {
+      width: 56px; height: 56px;
+      background: var(--clr-accent-soft);
+      color: var(--clr-accent);
+      border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 22px;
+    }
+    .service-name {
+      font-family: var(--ff-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--clr-dark);
+      margin-bottom: 10px;
+    }
+    .service-desc {
+      font-size: .95rem;
+      color: var(--clr-muted);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+    .service-includes {
+      border-top: 1px solid var(--clr-line);
+      padding-top: 18px;
+    }
+    .service-includes-title {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--clr-mid);
+      margin-bottom: 12px;
+    }
+    .service-includes ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 14px;
+    }
+    .service-includes li {
+      font-size: .85rem;
+      color: var(--clr-mid);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .service-includes li::before {
+      content: '✓';
+      color: var(--clr-accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .service-includes ul { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       ENGINEERING & QUALITY
+       ============================================================ */
+    .engineering-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .eng-card {
+      padding: 32px 28px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+      transition: var(--transition);
+    }
+    .eng-card:hover {
+      background: rgba(255,255,255,.07);
+      border-color: var(--clr-accent);
+    }
+    .eng-num {
+      font-family: var(--ff-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--clr-accent);
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+    .eng-title {
+      font-family: var(--ff-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .eng-desc {
+      font-size: .92rem;
+      color: rgba(255,255,255,.7);
+      line-height: 1.65;
+    }
+    @media (max-width: 900px) {
+      .engineering-grid { grid-template-columns: 1fr; gap: 18px; }
+    }
+
+    /* ============================================================
+       PROJECTS
+       ============================================================ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .project-card {
+      background: var(--clr-surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--clr-line);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .project-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+    }
+    .project-img img {
+      transition: transform .6s cubic-bezier(.4,0,.2,1);
+    }
+    .project-card:hover .project-img img { transform: scale(1.06); }
+    .project-type {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: var(--clr-accent);
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 3px;
+    }
+    .project-body { padding: 24px 24px 26px; flex: 1; display: flex; flex-direction: column; }
+    .project-title {
+      font-family: var(--ff-display);
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--clr-dark);
+      margin-bottom: 6px;
+    }
+    .project-location {
+      font-size: .82rem;
+      color: var(--clr-muted);
+      display: flex; align-items: center; gap: 5px;
+      margin-bottom: 16px;
+    }
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 14px 0;
+      border-top: 1px solid var(--clr-line);
+      border-bottom: 1px solid var(--clr-line);
+      margin-bottom: 16px;
+    }
+    .project-meta-item {
+      font-size: .78rem;
+      color: var(--clr-mid);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-meta-item strong {
+      font-family: var(--ff-display);
+      font-size: .95rem;
+      color: var(--clr-dark);
+      font-weight: 700;
+    }
+    .project-quote {
+      font-size: .88rem;
+      color: var(--clr-mid);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    .project-quote::before { content: '"'; color: var(--clr-accent); font-size: 1.4rem; font-weight: 700; line-height: 0; margin-right: 4px; vertical-align: -0.2em; }
+    .project-client {
+      font-size: .8rem;
+      color: var(--clr-muted);
+      margin-top: auto;
+    }
+    .project-client strong { color: var(--clr-dark); font-weight: 600; }
+
+    @media (max-width: 980px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .projects-grid { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       PROCESS
+       ============================================================ */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+    .process-step {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: var(--transition);
+    }
+    .process-step:hover {
+      background: rgba(255,255,255,.07);
+      border-color: var(--clr-accent);
+    }
+    .process-num {
+      font-family: var(--ff-display);
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--clr-accent);
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+    .process-title {
+      font-family: var(--ff-display);
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .process-desc {
+      font-size: .9rem;
+      color: rgba(255,255,255,.7);
+      line-height: 1.65;
+    }
+    @media (max-width: 900px) { .process-grid { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       TEAM
+       ============================================================ */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .team-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .team-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .team-img {
+      aspect-ratio: 1;
+      background: var(--clr-bg-alt);
+      overflow: hidden;
+      position: relative;
+    }
+    .team-img-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--clr-line);
+    }
+    .team-body { padding: 22px 22px 24px; }
+    .team-role {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 6px;
+    }
+    .team-name {
+      font-family: var(--ff-display);
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--clr-dark);
+      margin-bottom: 4px;
+    }
+    .team-since {
+      font-size: .82rem;
+      color: var(--clr-muted);
+      margin-bottom: 12px;
+    }
+    .team-desc {
+      font-size: .85rem;
+      color: var(--clr-mid);
+      line-height: 1.6;
+    }
+    @media (max-width: 980px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .team-grid { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       TESTIMONIALS
+       ============================================================ */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testi-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-line);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: var(--transition);
+      position: relative;
+    }
+    .testi-card:hover { box-shadow: var(--shadow-md); }
+    .testi-stars {
+      color: #d4a04a;
+      font-size: .95rem;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+    .testi-quote {
+      font-size: .95rem;
+      line-height: 1.75;
+      color: var(--clr-mid);
+      margin-bottom: 24px;
+    }
+    .testi-quote::before { content: '\201C'; color: var(--clr-accent); font-family: Georgia, serif; font-size: 2.2rem; line-height: 0; vertical-align: -0.3em; margin-right: 4px; }
+    .testi-service {
+      display: inline-block;
+      background: var(--clr-accent-soft);
+      color: var(--clr-accent-dark);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 4px 10px;
+      border-radius: 3px;
+      margin-bottom: 18px;
+    }
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid var(--clr-line);
+    }
+    .testi-avatar {
+      width: 44px; height: 44px;
+      background: var(--clr-dark);
+      color: #fff;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+    .testi-name { font-weight: 600; font-size: .92rem; color: var(--clr-dark); }
+    .testi-loc { font-size: .78rem; color: var(--clr-muted); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+    @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       INSIGHTS (Blog skeleton)
+       ============================================================ */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .insight-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .insight-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--clr-accent); }
+    .insight-img {
+      aspect-ratio: 16/9;
+      background: var(--clr-bg-alt);
+      position: relative;
+      overflow: hidden;
+    }
+    .insight-img img { transition: transform .5s ease; }
+    .insight-card:hover .insight-img img { transform: scale(1.05); }
+    .insight-body { padding: 24px 24px 28px; }
+    .insight-meta {
+      font-size: .75rem;
+      color: var(--clr-muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .insight-meta span { color: var(--clr-accent); font-weight: 600; }
+    .insight-title {
+      font-family: var(--ff-display);
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--clr-dark);
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+    .insight-excerpt {
+      font-size: .88rem;
+      color: var(--clr-muted);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .insight-link {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--clr-accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .insight-link:hover { color: var(--clr-accent-dark); }
+    .insight-link i { transition: transform .2s ease; }
+    .insight-link:hover i { transform: translateX(3px); }
+    @media (max-width: 900px) { .insights-grid { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       FAQ
+       ============================================================ */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: flex-start;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    .faq-item {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-line);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .faq-item.open { border-color: var(--clr-accent); }
+    .faq-question {
+      width: 100%;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      text-align: left;
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--clr-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-question i {
+      color: var(--clr-accent);
+      font-size: .85rem;
+      transition: transform .25s ease;
+    }
+    .faq-item.open .faq-question i { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+      padding: 0 24px;
+      font-size: .92rem;
+      color: var(--clr-muted);
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-answer { max-height: 400px; padding: 0 24px 22px; }
+    @media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+    /* ============================================================
+       CONTACT / CONSULTATION
+       ============================================================ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 60px;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 22px; }
+    .contact-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .contact-item:last-of-type { border-bottom: none; }
+    .ci-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,.06);
+      color: var(--clr-accent);
+      border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .ci-label {
+      font-size: .72rem;
+      color: rgba(255,255,255,.5);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 4px;
+    }
+    .ci-value {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+    }
+    .ci-value a { color: #fff; }
+    .ci-value a:hover { color: var(--clr-accent); }
+
+    .contact-form-card {
+      background: var(--clr-surface);
+      border-radius: var(--radius);
+      padding: 40px 36px;
+      box-shadow: var(--shadow-md);
+    }
+    .contact-form-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--clr-dark);
+      margin-bottom: 8px;
+    }
+    .contact-form-card .form-sub {
+      font-size: .9rem;
+      color: var(--clr-muted);
+      margin-bottom: 28px;
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--clr-mid);
+      margin-bottom: 7px;
+    }
+    .form-group label span { color: var(--clr-accent); }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1px solid var(--clr-line);
+      border-radius: var(--radius-sm);
+      font-family: var(--ff-body);
+      font-size: .95rem;
+      color: var(--clr-dark);
+      background: var(--clr-bg);
+      transition: all .2s ease;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--clr-accent);
+      box-shadow: 0 0 0 3px rgba(200,97,42,.12);
+      background: #fff;
+    }
+    .form-textarea { resize: vertical; min-height: 90px; }
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--clr-accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .form-submit:hover { background: var(--clr-accent-dark); transform: translateY(-2px); }
+    .form-privacy {
+      font-size: .75rem;
+      color: var(--clr-muted);
+      text-align: center;
+      margin-top: 14px;
+    }
+    .form-privacy i { color: var(--clr-accent); }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 30px 0;
+    }
+    .form-success .success-icon {
+      font-size: 3rem;
+      color: var(--clr-accent);
+      margin-bottom: 16px;
+    }
+    .form-success h4 {
+      font-family: var(--ff-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--clr-dark);
+      margin-bottom: 10px;
+    }
+    .form-success p { color: var(--clr-muted); margin-bottom: 20px; }
+    @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      background: var(--clr-dark);
+      color: rgba(255,255,255,.6);
+      padding: 70px 0 30px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+    .footer-brand .logo-text { color: #fff; }
+    .footer-brand .logo-text span { color: rgba(255,255,255,.5); }
+    .footer-brand p {
+      font-size: .9rem;
+      line-height: 1.75;
+      margin-top: 18px;
+      max-width: 320px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .footer-social a {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,.06);
+      border-radius: 6px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.7);
+      transition: var(--transition);
+    }
+    .footer-social a:hover {
+      background: var(--clr-accent);
+      color: #fff;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-size: .85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 20px;
+    }
+    .footer-col li { margin-bottom: 12px; font-size: .88rem; }
+    .footer-col li a {
+      color: rgba(255,255,255,.55);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-col li a:hover { color: var(--clr-accent); }
+    .footer-col li i { color: var(--clr-accent); font-size: .7rem; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.4);
+    }
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    }
+    @media (max-width: 540px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* ============================================================
+       WHATSAPP FAB + BACK TO TOP
+       ============================================================ */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 998;
+      width: 60px; height: 60px;
+      background: var(--clr-whatsapp);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 28px rgba(37,211,102,.45);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .whatsapp-fab:hover { transform: scale(1.08); }
+    .whatsapp-fab svg { width: 28px; height: 28px; position: relative; z-index: 1; }
+    .fab-pulse {
+      position: absolute;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: var(--clr-whatsapp);
+      animation: fab-ring 2.2s ease-out infinite;
+    }
+    @keyframes fab-ring {
+      0%   { transform: scale(1);   opacity: .7; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 100px;
+      width: 46px; height: 46px;
+      background: var(--clr-dark);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all .3s ease;
+      z-index: 997;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .back-to-top:hover { background: var(--clr-accent); }
+    @media (max-width: 768px) {
+      .back-to-top { display: none; }
+      .whatsapp-fab { display: none; }
+    }
+
+    /* ============================================================
+       STICKY MOBILE CTA
+       ============================================================ */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 999;
+      background: var(--clr-surface);
+      padding: 10px 16px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,.1);
+      gap: 10px;
+    }
+    .sticky-cta .cta-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+    .sticky-cta .cta-call { background: var(--clr-accent); color: #fff; }
+    .sticky-cta .cta-whatsapp { background: var(--clr-whatsapp); color: #fff; }
+    @media (max-width: 768px) {
+      .sticky-cta { display: flex; }
+      body { padding-bottom: 70px; }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 360px;
+    }
+    .toast {
+      background: var(--clr-surface);
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transform: translateX(120%);
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+      border-left: 4px solid var(--clr-accent);
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-error { border-left-color: #c43d2d; }
+    .toast-success { border-left-color: var(--clr-whatsapp); }
+    .toast-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .toast-title { font-weight: 700; font-size: .92rem; margin-bottom: 4px; color: var(--clr-dark); }
+    .toast-message { font-size: .85rem; color: var(--clr-muted); line-height: 1.5; }
+    .toast-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--clr-muted); padding: 0; }
+    @media (max-width: 480px) { .toast-container { left: 20px; right: 20px; max-width: none; } }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s cubic-bezier(.25,.1,.25,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+
+    /* Mobile responsive tweaks */
+    @media (max-width: 768px) {
+      .section { padding: 70px 0; }
+      .section--tight { padding: 50px 0; }
+      .section-header { margin-bottom: 40px; }
+      .section-title { font-size: clamp(1.7rem, 5vw, 2.2rem); }
+      .utility-bar { display: none; }
+      .hero { padding: 60px 0 70px; }
+      .hero-meta { gap: 18px; }
+      .hero-meta-item { font-size: .82rem; }
+      .hero-meta-item strong { font-size: 1.1rem; }
+      .contact-form-card { padding: 28px 22px; }
+    }
+  </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3RVF77F"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
-    <div class="bg-gradient"></div>
-
-    <!-- Header -->
-    <header class="app-header">
-        <div class="brand-group">
-            <div class="logo-container">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            </div>
-            <div class="brand-info">
-                <h1>Arts Academy</h1>
-                <p>Sir Chandan Kundu</p>
-            </div>
-        </div>
-        <a href="tel:9126879504" class="call-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            Call
-        </a>
-    </header>
-
-    <main class="container">
-        <div class="hero-text">
-            <div class="status-badge">
-                <span class="status-dot"></span>
-                <span>Admissions Open 2026</span>
-            </div>
-            <h2 class="heading-main">
-                Start Your<br>
-                <span class="text-gradient">Arts Academy <br> Journey</span>
-            </h2>
-            <p class="hero-subtitle">Join a legacy of Arts Academy. Experience best education designed for your future success.</p>
-        </div>
-
-        <form id="admissionForm" novalidate>
-            
-            <!-- SECTION 1: Profile -->
-            <div class="form-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    </div>
-                    <span class="card-title">Student Profile</span>
-                </div>
-
-                <!-- Name -->
-                <div class="input-group">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    </div>
-                    <input type="text" id="studentName" class="modern-input" placeholder="Enter your full name" required autocomplete="off">
-                    <label for="studentName" class="floating-label">Student Name</label>
-                    <div class="valid-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    </div>
-                </div>
-                <span class="error-msg">Name is required</span>
-
-                <!-- DOB -->
-                <div class="input-group">
-                    <div class="input-icon date-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    </div>
-                    <input type="date" id="dob" class="modern-input" placeholder="Select birth date" required>
-                    <label for="dob" class="floating-label">Date of Birth</label>
-                </div>
-                <span class="error-msg">Please select DOB</span>
-
-                <!-- Class Dropdown -->
-                <div class="input-group">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-                    </div>
-                    <select id="studentClass" class="modern-input" required>
-                        <option value="" disabled selected></option>
-                        <option value="Class 1">Class 1</option>
-                        <option value="Class 2">Class 2</option>
-                        <option value="Class 3">Class 3</option>
-                        <option value="Class 4">Class 4</option>
-                        <option value="Class 5">Class 5</option>
-                        <option value="Class 6">Class 6</option>
-                        <option value="Class 7">Class 7</option>
-                        <option value="Class 8">Class 8</option>
-                        <option value="Class 9">Class 9</option>
-                        <option value="Class 10">Class 10</option>
-                        <option value="Class 11">Class 11</option>
-                        <option value="Class 12">Class 12</option>
-                        <option value="B.A Honours">B.A Honours</option>
-                        <option value="B.A Pass">B.A Pass</option>
-                        <option value="Computer">Computer</option>
-                    </select>
-                    <label for="studentClass" class="floating-label">Class</label>
-                </div>
-                <span class="error-msg">Select a class</span>
-            </div>
-
-            <!-- SECTION 2: Academics -->
-            <div class="form-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                    </div>
-                    <span class="card-title">Academics</span>
-                </div>
-
-                <!-- School -->
-                <div class="input-group">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4 8 4v14"/><path d="M17 21v-8.5a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 7 12.5V21"/></svg>
-                    </div>
-                    <input type="text" id="schoolName" class="modern-input" list="schoolList" placeholder="e.g., St. Xavier's School" required autocomplete="off">
-                    <datalist id="schoolList">
-                        <option value="CMS"><option value="BHARATI"><option value="MUNICIPAL BOYS"><option value="RATHTALA"><option value="BIDYARTHI"><option value="RAMKRISHNA"><option value="RAJ SCHOOL"><option value="WOMEN'S CLG"><option value="HARISAVA">
-              </datalist>
-                    </datalist>
-                    <label for="schoolName" class="floating-label">Current School</label>
-                    <div class="valid-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    </div>
-                </div>
-                <span class="error-msg">School name required</span>
-
-                <!-- Subjects -->
-                <label class="subject-label">Select Subjects</label>
-                <div class="subject-container" id="subjectContainer">
-                    <div class="subject-chip" data-value="Bengali">Bengali</div>
-                    <div class="subject-chip" data-value="History">History</div>
-                    <div class="subject-chip" data-value="English">English</div>
-                    <div class="subject-chip" data-value="Geography">Geography</div>
-                    <div class="subject-chip" data-value="Sanskrit">Sanskrit</div>
-                    <div class="subject-chip" data-value="Computer">Computer</div>
-                </div>
-                <input type="hidden" id="selectedSubjects" required>
-                <div class="subject-error" id="subjectError">Select at least one subject</div>
-
-                <!-- Fees -->
-                <div class="input-group">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                    </div>
-                    <input type="number" id="fees" class="modern-input" placeholder="₹ 5000 (optional)">
-                    <label for="fees" class="floating-label">Monthly Fees</label>
-                </div>
-
-                <!-- Admission Date -->
-                <div class="input-group">
-                    <div class="input-icon date-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    </div>
-                    <input type="date" id="admissionDate" class="modern-input" placeholder="Admission Date" required>
-                    <label for="admissionDate" class="floating-label">Admission Date</label>
-                </div>
-                <span class="error-msg">Date is required</span>
-            </div>
-
-            <!-- SECTION 3: Guardian -->
-            <div class="form-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    </div>
-                    <span class="card-title">Guardian Details</span>
-                </div>
-
-                <!-- Guardian Name -->
-                <div class="input-group">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
-                    <input type="text" id="guardianName" class="modern-input" placeholder="Father / Mother name" autocomplete="off">
-                    <label for="guardianName" class="floating-label">Guardian Name</label>
-                </div>
-
-                <!-- Guardian Phone -->
-                <div class="input-group">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    </div>
-                    <input type="tel" id="guardianPhone" class="modern-input" placeholder="e.g., 90000 00000" pattern="[0-9]{10}" required autocomplete="tel">
-                    <label for="guardianPhone" class="floating-label">Guardian Phone</label>
-                    <div class="valid-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    </div>
-                </div>
-                <span class="error-msg">Valid 10-digit number</span>
-
-                <!-- Student Phone -->
-                <div class="input-group">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    </div>
-                    <input type="tel" id="studentPhone" class="modern-input" placeholder="Mobile number" pattern="[0-9]{10}" autocomplete="tel">
-                    <label for="studentPhone" class="floating-label">Student Phone</label>
-                </div>
-
-                <!-- Address -->
-                <div class="input-group" style="height: auto; padding-top: 16px;">
-                    <div class="input-icon" style="align-self: flex-start; margin-top: 2px;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    </div>
-                    <textarea id="address" class="modern-input" placeholder="Flat no., Street, City..." rows="3" style="resize:none; padding-top: 0;"></textarea>
-                    <label for="address" class="floating-label">Full Address</label>
-                </div>
-            </div>
-
-        </form>
-    </main>
-
-    <footer>
-        <p>Arts Academy © 2026. Secure Admission Portal.</p>
-    </footer>
-
-    <!-- Floating Button -->
-    <div class="submit-wrapper">
-        <button type="submit" form="admissionForm" class="btn-submit" id="submitBtn">
-            <!-- Added ID for JS selection -->
-            <svg id="submit-icon" class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 2 11 2"/><path d="M2 13l5 5L22 2"/></svg>
-            <span id="submit-text" class="btn-text">Submit Application</span>
-            <div class="loader"></div>
-        </button>
+  <!-- ============================================================
+       UTILITY BAR
+       ============================================================ -->
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <div class="utility-left">
+        <span class="utility-item"><i class="fa-solid fa-phone"></i> <a href="tel:+917797725755">+91 77977 25755</a></span>
+        <span class="utility-item"><i class="fa-solid fa-envelope"></i> <a href="mailto:contact@ndconstruction.in">contact@ndconstruction.in</a></span>
+        <span class="utility-item"><i class="fa-solid fa-location-dot"></i> Burdwan (Goda), West Bengal</span>
+      </div>
+      <a href="#contact" class="utility-cta">Schedule a Consultation <i class="fa-solid fa-arrow-right" style="margin-left:6px;font-size:.7rem;"></i></a>
     </div>
+  </div>
 
-    <!-- Improved Success Modal -->
-    <div class="modal" id="responseModal">
-        <div class="modal-card" id="modalCard">
-            <!-- Animated Icon Container -->
-            <div class="success-icon-wrapper">
-                <!-- Success Checkmark -->
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <!-- Error X (Hidden by default) -->
-                <svg class="icon-x" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav id="navbar">
+    <div class="container nav-inner">
+      <a href="#hero" class="nav-logo">
+        <div class="logo-mark">ND</div>
+        <div>
+          <div class="logo-text">ND Construction<span>Pvt Ltd · Est. 2010</span></div>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#process">Process</a>
+        <a href="#team">Team</a>
+        <a href="#insights">Insights</a>
+        <a href="#faq">FAQ</a>
+      </div>
+
+      <div class="nav-cta">
+        <a href="tel:+917797725755" class="btn btn--outline btn--sm"><i class="fa-solid fa-phone"></i> Call</a>
+        <a href="#contact" class="btn btn--primary btn--sm">Schedule Consultation</a>
+      </div>
+
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#about" onclick="closeMobileNav()" class="menu-link">About <i class="fa-solid fa-chevron-right" style="font-size:.85rem;color:var(--clr-muted);"></i></a>
+    <a href="#services" onclick="closeMobileNav()" class="menu-link">Services <i class="fa-solid fa-chevron-right" style="font-size:.85rem;color:var(--clr-muted);"></i></a>
+    <a href="#projects" onclick="closeMobileNav()" class="menu-link">Projects <i class="fa-solid fa-chevron-right" style="font-size:.85rem;color:var(--clr-muted);"></i></a>
+    <a href="#process" onclick="closeMobileNav()" class="menu-link">Process <i class="fa-solid fa-chevron-right" style="font-size:.85rem;color:var(--clr-muted);"></i></a>
+    <a href="#team" onclick="closeMobileNav()" class="menu-link">Team <i class="fa-solid fa-chevron-right" style="font-size:.85rem;color:var(--clr-muted);"></i></a>
+    <a href="#insights" onclick="closeMobileNav()" class="menu-link">Insights <i class="fa-solid fa-chevron-right" style="font-size:.85rem;color:var(--clr-muted);"></i></a>
+    <a href="#faq" onclick="closeMobileNav()" class="menu-link">FAQ <i class="fa-solid fa-chevron-right" style="font-size:.85rem;color:var(--clr-muted);"></i></a>
+    <a href="#contact" onclick="closeMobileNav()" class="menu-link">Contact <i class="fa-solid fa-chevron-right" style="font-size:.85rem;color:var(--clr-muted);"></i></a>
+    <div class="mobile-nav-buttons">
+      <a href="tel:+917797725755" class="btn btn--primary"><i class="fa-solid fa-phone"></i> Call +91 77977 25755</a>
+      <a href="https://wa.me/917797725755" target="_blank" class="btn btn--whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+    </div>
+    <div class="mobile-nav-footer">
+      <p>ND Construction Pvt Ltd · Burdwan</p>
+      <div class="mobile-nav-contact">
+        <a href="tel:+917797725755" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://wa.me/917797725755" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="mailto:contact@ndconstruction.in" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#contact" aria-label="Location"><i class="fa-solid fa-location-dot"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid">
+
+        <div>
+          <div class="hero-eyebrow">
+            <i class="fa-solid fa-shield-halved"></i> Engineer-Supervised · Milestone Contracts
+          </div>
+
+          <h1 class="hero-title">
+            Engineered construction.<br/>
+            <em>Delivered with discipline.</em>
+          </h1>
+
+          <p class="hero-sub">
+            ND Construction Pvt Ltd builds homes and renovations across Burdwan and Purba Bardhaman with a structured approach: a qualified engineer on every project, written milestone contracts, and a 5-year structural warranty.
+          </p>
+
+          <div class="hero-cta">
+            <a href="#contact" class="btn btn--primary btn--lg"><i class="fa-solid fa-clipboard-list"></i> Schedule a Consultation</a>
+            <a href="https://wa.me/917797725755?text=Hello%20ND%20Construction.%20I%27d%20like%20to%20discuss%20a%20project%20in%20Burdwan." target="_blank" class="btn btn--outline btn--lg"><i class="fa-brands fa-whatsapp"></i> Discuss on WhatsApp</a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <i class="fa-solid fa-calendar-check"></i>
+              <div><strong>16+</strong>Years in practice</div>
             </div>
-            
-            <h2 class="modal-title" id="modalTitle">Success!</h2>
-            <p class="modal-msg" id="modalMsg">Admission received. Our team will contact you shortly.</p>
-            <button class="btn-modal" id="modalBtn">
-                Done
+            <div class="hero-meta-item">
+              <i class="fa-solid fa-house-circle-check"></i>
+              <div><strong>500+</strong>Projects delivered</div>
+            </div>
+            <div class="hero-meta-item">
+              <i class="fa-solid fa-shield-halved"></i>
+              <div><strong>5-yr</strong>Structural warranty</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="assets/img7.png" alt="3BHK residential construction completed in Burdwan by ND Construction Pvt Ltd" loading="eager" fetchpriority="high" />
+          <div class="hero-visual-overlay"></div>
+          <div class="hero-visual-caption">
+            <div class="caption-tag">Recently Completed · 2024</div>
+            <h3>3BHK Residential Build · Goda, Burdwan</h3>
+          </div>
+          <div class="hero-floating-card hero-floating-card--top">
+            <div class="fc-icon"><i class="fa-solid fa-hard-hat"></i></div>
+            <div class="fc-text">
+              <div class="fc-num">In-House Teams</div>
+              <div class="fc-lab">No outsourcing</div>
+            </div>
+          </div>
+          <div class="hero-floating-card hero-floating-card--bottom">
+            <div class="fc-icon"><i class="fa-solid fa-file-contract"></i></div>
+            <div class="fc-text">
+              <div class="fc-num">Milestone Contracts</div>
+              <div class="fc-lab">Pay as we build</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TRUST STRIP
+       ============================================================ -->
+  <div class="trust-strip">
+    <div class="container">
+      <div class="trust-items">
+        <div class="trust-item"><span class="ti-icon"><i class="fa-solid fa-shield-halved"></i></span> 5-Year Structural Warranty</div>
+        <div class="trust-item"><span class="ti-icon"><i class="fa-solid fa-user-tie"></i></span> Engineer-Supervised</div>
+        <div class="trust-item"><span class="ti-icon"><i class="fa-solid fa-file-contract"></i></span> Milestone Contracts</div>
+        <div class="trust-item"><span class="ti-icon"><i class="fa-solid fa-people-group"></i></span> In-House Teams Only</div>
+        <div class="trust-item"><span class="ti-icon"><i class="fa-solid fa-clock"></i></span> 16+ Years · Pvt Ltd</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ABOUT / FOUNDER
+       ============================================================ -->
+  <section id="about" class="section section--white">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-visual reveal">
+          <div class="team-img-placeholder"><i class="fa-solid fa-user-tie"></i></div>
+          <div class="about-visual-badge">
+            <strong>Babu Deyoan</strong>
+            <span>Founder · Since 2010</span>
+          </div>
+        </div>
+
+        <div class="about-body reveal reveal-delay-1">
+          <span class="tag">About the Company</span>
+          <h2 class="section-title">A construction company <em>built like a structure</em> — on a foundation of trust.</h2>
+          <p>
+            ND Construction Pvt Ltd was founded in 2010 by <strong>Babu Deyoan</strong> in Burdwan with a single belief: building a home is one of the most important decisions a family will ever make, and it deserves more than a phone number and a quote.
+          </p>
+          <p>
+            What began as a skilled local team has grown into a structured construction company — qualified engineers, in-house finishing teams, written milestone contracts, and a 5-year structural warranty. The work has always been local. The systems have become professional.
+          </p>
+          <p>
+            Today, families across Burdwan, Goda, Memari, Kalna, Katwa, Galsi, Ausgram and Durgapur trust ND Construction with new builds, renovations and finishing work because we treat their project the way a company should — with engineering rigor, transparent contracts, and a team that shows up every day until the keys are handed over.
+          </p>
+
+          <div class="about-signature">
+            <div class="testi-avatar" style="background:var(--clr-accent);">BD</div>
+            <div class="about-signature-text">
+              <strong>Babu Deyoan</strong>
+              <span>Founder, ND Construction Pvt Ltd</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SERVICES
+       ============================================================ -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="section-header section-header--center">
+        <span class="tag">What We Do</span>
+        <h2 class="section-title">Four disciplines. <em>One accountable team.</em></h2>
+        <p class="section-sub">From foundation to handover, every stage of your project is delivered by an in-house team — never subcontracted to an unknown third party.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-num">01 / Residential Construction</div>
+          <div class="service-icon"><i class="fa-solid fa-building"></i></div>
+          <div class="service-name">New Home Construction</div>
+          <p class="service-desc">Full builds from foundation to handover. Engineer-supervised RCC frame structures, brick masonry, plastering, doors, windows, flooring, electrical and plumbing — managed as one integrated project.</p>
+          <div class="service-includes">
+            <div class="service-includes-title">What's included</div>
+            <ul>
+              <li>RCC frame structure</li>
+              <li>Brick masonry</li>
+              <li>Plastering &amp; finishing</li>
+              <li>Doors &amp; windows</li>
+              <li>Electrical &amp; plumbing</li>
+              <li>Flooring &amp; tiling</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-num">02 / Renovation</div>
+          <div class="service-icon"><i class="fa-solid fa-hammer"></i></div>
+          <div class="service-name">Renovation &amp; Remodeling</div>
+          <p class="service-desc">Whole-home, bathroom, kitchen and room renovations executed by our in-house finishing teams. We work from a written scope with a fixed timeline so you know exactly what's changing and when.</p>
+          <div class="service-includes">
+            <div class="service-includes-title">What's included</div>
+            <ul>
+              <li>Bathroom renovation</li>
+              <li>Kitchen remodel</li>
+              <li>Floor plan changes</li>
+              <li>Waterproofing</li>
+              <li>Wall &amp; ceiling work</li>
+              <li>Plumbing upgrades</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-num">03 / Finishing</div>
+          <div class="service-icon"><i class="fa-solid fa-paint-roller"></i></div>
+          <div class="service-name">Interior &amp; Exterior Finishing</div>
+          <p class="service-desc">Painting, premium tile laying, marble, granite, vitrified and anti-skid flooring. Our finishing teams are full-time employees of ND Construction — trained on the materials we recommend, accountable for the finish we promise.</p>
+          <div class="service-includes">
+            <div class="service-includes-title">What's included</div>
+            <ul>
+              <li>Interior painting</li>
+              <li>Exterior painting</li>
+              <li>Vitrified &amp; marble tiling</li>
+              <li>Granite work</li>
+              <li>False ceiling</li>
+              <li>Texture &amp; finishes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-num">04 / Maintenance</div>
+          <div class="service-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+          <div class="service-name">Maintenance &amp; Repairs</div>
+          <p class="service-desc">Planned maintenance, leak repair, waterproofing, electrical fixes, fixture replacement and post-handover support. Existing clients get priority response; new clients are scheduled within one business day.</p>
+          <div class="service-includes">
+            <div class="service-includes-title">What's included</div>
+            <ul>
+              <li>Leak &amp; waterproofing</li>
+              <li>Electrical repairs</li>
+              <li>Plumbing fixes</li>
+              <li>Fixture replacement</li>
+              <li>Annual maintenance</li>
+              <li>Post-handover support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ENGINEERING & QUALITY
+       ============================================================ -->
+  <section class="section section--dark">
+    <div class="container">
+      <div class="section-header section-header--center">
+        <span class="tag">How We De-Risk Your Build</span>
+        <h2 class="section-title">Engineering. Inspections. Warranty.</h2>
+        <p class="section-sub">A construction project has too many ways to go wrong. We've built the systems that make sure it doesn't.</p>
+      </div>
+
+      <div class="engineering-grid">
+        <div class="eng-card reveal">
+          <div class="eng-num">01</div>
+          <h3 class="eng-title">Engineer on every project</h3>
+          <p class="eng-desc">A highly qualified civil/structural engineer supervises every ND Construction project — from soil assessment and foundation design to final structural inspection. Drawings are reviewed, not assumed.</p>
+        </div>
+        <div class="eng-card reveal reveal-delay-1">
+          <div class="eng-num">02</div>
+          <h3 class="eng-title">Material &amp; milestone inspections</h3>
+          <p class="eng-desc">Materials are checked on arrival. Each construction stage — foundation, lintel, roof, plastering, finishing — passes a defined inspection before the next stage begins. Nothing is hidden behind the next layer of work.</p>
+        </div>
+        <div class="eng-card reveal reveal-delay-2">
+          <div class="eng-num">03</div>
+          <h3 class="eng-title">5-year structural warranty</h3>
+          <p class="eng-desc">Every ND Construction build carries a 5-year structural warranty. If anything we built moves, cracks, or fails for reasons within our scope of work, we come back and fix it — at no cost to you.</p>
+        </div>
+        <div class="eng-card reveal">
+          <div class="eng-num">04</div>
+          <h3 class="eng-title">Weekly progress with photos</h3>
+          <p class="eng-desc">You receive a written weekly progress update with photographs from the site. You always know what's been done, what's next, and whether we're on schedule — without having to visit the site yourself.</p>
+        </div>
+        <div class="eng-card reveal reveal-delay-1">
+          <div class="eng-num">05</div>
+          <h3 class="eng-title">In-house teams, not subcontractors</h3>
+          <p class="eng-desc">Our masons, painters, plumbers, electricians and tilers are full-time employees. They are trained on our methods, accountable to our project managers, and insured under our company.</p>
+        </div>
+        <div class="eng-card reveal reveal-delay-2">
+          <div class="eng-num">06</div>
+          <h3 class="eng-title">Written milestone contracts</h3>
+          <p class="eng-desc">Every project runs on a written agreement with payment tied to construction milestones. You pay for completed work, not promises. The scope, the cost, the timeline — all in writing before the first brick is laid.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJECTS
+       ============================================================ -->
+  <section id="projects" class="section section--white">
+    <div class="container container--wide">
+      <div class="section-header section-header--center">
+        <span class="tag">Selected Projects</span>
+        <h2 class="section-title">Work we're <em>proud to stand behind.</em></h2>
+        <p class="section-sub">A small selection of completed projects across Burdwan district. Every project below was delivered on a written milestone contract, supervised by our engineering team, and signed off by the client.</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <div class="project-card reveal">
+          <div class="project-img">
+            <img src="assets/img7.png" alt="3BHK residential construction in Goda, Burdwan" loading="lazy" />
+            <div class="project-type">New Build</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">3BHK Residential Construction</div>
+            <div class="project-location"><i class="fa-solid fa-location-dot"></i> Goda, Burdwan · 2024</div>
+            <div class="project-meta">
+              <div class="project-meta-item"><span>Duration</span><strong>9 months</strong></div>
+              <div class="project-meta-item"><span>Built-up</span><strong>1,850 sqft</strong></div>
+              <div class="project-meta-item"><span>Type</span><strong>RCC Frame</strong></div>
+            </div>
+            <p class="project-quote">Exactly my dream home. Every rupee was accounted for, and we got the house ahead of schedule.</p>
+            <div class="project-client">Client: <strong>Mr. Subhranath Roy</strong></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-img">
+            <img src="assets/a1.png" alt="Bathroom renovation in Goda, Burdwan" loading="lazy" />
+            <div class="project-type">Renovation</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">Complete Bathroom Makeover</div>
+            <div class="project-location"><i class="fa-solid fa-location-dot"></i> Goda, Burdwan</div>
+            <div class="project-meta">
+              <div class="project-meta-item"><span>Duration</span><strong>6 days</strong></div>
+              <div class="project-meta-item"><span>Scope</span><strong>Full bath</strong></div>
+              <div class="project-meta-item"><span>Cost</span><strong>₹28,000</strong></div>
+            </div>
+            <p class="project-quote">A 15-year-old bathroom transformed in under a week. Tiles, fittings, plumbing — the works.</p>
+            <div class="project-client">Client: <strong>Mrs. Priya Mukherjee</strong></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-img">
+            <img src="assets/a2.png" alt="Exterior house painting in Memari, Burdwan" loading="lazy" />
+            <div class="project-type">Painting</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">Full House Exterior Painting</div>
+            <div class="project-location"><i class="fa-solid fa-location-dot"></i> Memari, Burdwan</div>
+            <div class="project-meta">
+              <div class="project-meta-item"><span>Duration</span><strong>4 days</strong></div>
+              <div class="project-meta-item"><span>Scope</span><strong>Exterior</strong></div>
+              <div class="project-meta-item"><span>Cost</span><strong>₹18,500</strong></div>
+            </div>
+            <p class="project-quote">The home looks brand new. Neighbours kept asking who did the work.</p>
+            <div class="project-client">Client: <strong>Mrs. Priya Mukherjee</strong></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-img">
+            <img src="assets/a3.png" alt="Floor tile replacement in Katwa, Burdwan" loading="lazy" />
+            <div class="project-type">Flooring</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">Premium Vitrified Floor Tiling</div>
+            <div class="project-location"><i class="fa-solid fa-location-dot"></i> Katwa, Burdwan</div>
+            <div class="project-meta">
+              <div class="project-meta-item"><span>Duration</span><strong>3 days</strong></div>
+              <div class="project-meta-item"><span>Scope</span><strong>Full floor</strong></div>
+              <div class="project-meta-item"><span>Cost</span><strong>₹22,000</strong></div>
+            </div>
+            <p class="project-quote">Old floors, new finish. The team worked cleanly and finished ahead of time.</p>
+            <div class="project-client">Client: <strong>Mrs. Mamata Mondal</strong></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-img">
+            <img src="assets/a4.png" alt="Modern kitchen renovation in Kalna, Burdwan" loading="lazy" />
+            <div class="project-type">Kitchen</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">Modern Kitchen Renovation</div>
+            <div class="project-location"><i class="fa-solid fa-location-dot"></i> Kalna, Burdwan</div>
+            <div class="project-meta">
+              <div class="project-meta-item"><span>Duration</span><strong>5 days</strong></div>
+              <div class="project-meta-item"><span>Scope</span><strong>Full kitchen</strong></div>
+              <div class="project-meta-item"><span>Cost</span><strong>₹35,000</strong></div>
+            </div>
+            <p class="project-quote">Modern upgrade that completely changed how the kitchen feels. Excellent work.</p>
+            <div class="project-client">Client: <strong>Mr. Asim Kumar Das</strong></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-img">
+            <img src="assets/img14.png" alt="General repair and waterproofing in Goda, Burdwan" loading="lazy" />
+            <div class="project-type">Repair</div>
+          </div>
+          <div class="project-body">
+            <div class="project-title">Roof Leak Repair &amp; Waterproofing</div>
+            <div class="project-location"><i class="fa-solid fa-location-dot"></i> Goda, Burdwan · 2024</div>
+            <div class="project-meta">
+              <div class="project-meta-item"><span>Duration</span><strong>2 days</strong></div>
+              <div class="project-meta-item"><span>Scope</span><strong>Leak fix</strong></div>
+              <div class="project-meta-item"><span>Warranty</span><strong>2 years</strong></div>
+            </div>
+            <p class="project-quote">Two failed contractors before ND. They found the real source. Zero leaks since.</p>
+            <div class="project-client">Client: <strong>Mrs. Mamata Mondal</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;margin-top:48px;">
+        <p style="color:var(--clr-muted);font-size:.92rem;margin-bottom:18px;">Want to see more projects — or visit a completed site? We share our full portfolio and arrange site visits on request.</p>
+        <a href="https://wa.me/917797725755?text=Hello%20ND%20Construction.%20I%27d%20like%20to%20see%20more%20project%20photos%20and%20possibly%20visit%20a%20completed%20site." target="_blank" class="btn btn--primary"><i class="fa-brands fa-whatsapp"></i> Request Full Portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROCESS
+       ============================================================ -->
+  <section id="process" class="section section--dark-2">
+    <div class="container">
+      <div class="section-header section-header--center">
+        <span class="tag">How We Work</span>
+        <h2 class="section-title">A project, in <em>six predictable steps.</em></h2>
+        <p class="section-sub">From your first call to the day we hand over the keys, here is what working with ND Construction Pvt Ltd actually looks like.</p>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-step reveal">
+          <div class="process-num">01</div>
+          <h3 class="process-title">Consultation</h3>
+          <p class="process-desc">Call, WhatsApp, or fill the form. Tell us about your site, your requirements, your timeline. We respond within one business day.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-1">
+          <div class="process-num">02</div>
+          <h3 class="process-title">Site visit with our engineer</h3>
+          <p class="process-desc">A qualified engineer visits your site at no cost. We assess the soil, the existing structure, the access — and discuss what is feasible within your budget.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="process-num">03</div>
+          <h3 class="process-title">Itemized estimate</h3>
+          <p class="process-desc">You receive a written estimate broken into materials, labour, and timeline. Every line item, every quantity, every rate — in writing. No verbal numbers.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-num">04</div>
+          <h3 class="process-title">Contract &amp; milestones</h3>
+          <p class="process-desc">Once approved, we sign a written agreement with payment tied to construction milestones. You pay for completed work — never for promises.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-1">
+          <div class="process-num">05</div>
+          <h3 class="process-title">Execution &amp; weekly reports</h3>
+          <p class="process-desc">Our in-house team executes the work. You receive a written progress update with photographs every week. Engineer inspections happen at each milestone.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="process-num">06</div>
+          <h3 class="process-title">Handover &amp; warranty</h3>
+          <p class="process-desc">On completion, we walk the site with you, address a snag list if anything needs touching up, and hand over the warranty documentation. The relationship doesn't end at handover.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TEAM
+       ============================================================ -->
+  <section id="team" class="section">
+    <div class="container">
+      <div class="section-header section-header--center">
+        <span class="tag">The People</span>
+        <h2 class="section-title">A small, <em>senior team.</em></h2>
+        <p class="section-sub">The people who will actually build your home.</p>
+      </div>
+
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="team-img">
+            <div class="team-img-placeholder"><i class="fa-solid fa-user-tie"></i></div>
+          </div>
+          <div class="team-body">
+            <div class="team-role">Founder</div>
+            <div class="team-name">Babu Deyoan</div>
+            <div class="team-since">With ND Construction since 2010</div>
+            <p class="team-desc">Founded the company in Burdwan. Oversees every project personally. Sets the standard for the work and the relationship with the client.</p>
+          </div>
+        </div>
+
+        <div class="team-card reveal reveal-delay-1">
+          <div class="team-img">
+            <div class="team-img-placeholder"><i class="fa-solid fa-helmet-safety"></i></div>
+          </div>
+          <div class="team-body">
+            <div class="team-role">Engineering &amp; Quality</div>
+            <div class="team-name">Lead Engineer</div>
+            <div class="team-since">Highly qualified civil / structural engineer</div>
+            <p class="team-desc">Reviews drawings, supervises execution, signs off on every milestone. The technical authority behind every ND Construction project.</p>
+          </div>
+        </div>
+
+        <div class="team-card reveal reveal-delay-2">
+          <div class="team-img">
+            <div class="team-img-placeholder"><i class="fa-solid fa-person-digging"></i></div>
+          </div>
+          <div class="team-body">
+            <div class="team-role">Site Supervisor</div>
+            <div class="team-name">Senior Foreman</div>
+            <div class="team-since">12+ years on ND Construction sites</div>
+            <p class="team-desc">Runs day-to-day site operations. Coordinates the in-house teams, ensures material flow, and keeps the work on schedule.</p>
+          </div>
+        </div>
+
+        <div class="team-card reveal reveal-delay-3">
+          <div class="team-img">
+            <div class="team-img-placeholder"><i class="fa-solid fa-paint-roller"></i></div>
+          </div>
+          <div class="team-body">
+            <div class="team-role">Finishing Lead</div>
+            <div class="team-name">Finishing Supervisor</div>
+            <div class="team-since">8+ years on ND Construction finishing teams</div>
+            <p class="team-desc">Leads the painting, tiling and finishing crews. The person responsible for how the project actually looks at handover.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:36px;">
+        <p style="color:var(--clr-muted);font-size:.9rem;">We are an in-house team of 30+ across engineering, supervision, masonry, painting, plumbing, electrical, and finishing. No subcontractors on your project.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIALS
+       ============================================================ -->
+  <section class="section section--white">
+    <div class="container">
+      <div class="section-header section-header--center">
+        <span class="tag">What Families Say</span>
+        <h2 class="section-title">Words from clients <em>across Purba Bardhaman.</em></h2>
+        <p class="section-sub">A handful of recent projects. Every project on our books is a reference — we'll connect you with past clients on request.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-service">Residential Construction</span>
+          <p class="testi-quote">I was scared to trust anyone with a big project. But ND Construction made everything transparent — every rupee was accounted for, work started on the exact date they promised, and we got our house ahead of schedule. I cried when I saw the final result. Exactly my dream home.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">SR</div>
+            <div>
+              <div class="testi-name">Subhranath Roy</div>
+              <div class="testi-loc"><i class="fa-solid fa-location-dot"></i> Goda, Burdwan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal reveal-delay-1">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-service">Renovation + Painting</span>
+          <p class="testi-quote">Our 15-year-old bathroom was an embarrassment. ND Construction completely transformed it in just 6 days — new tiles, new fittings, the works. Then they painted the whole house. The final result made our home look brand new.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">PM</div>
+            <div>
+              <div class="testi-name">Priya Mukherjee</div>
+              <div class="testi-loc"><i class="fa-solid fa-location-dot"></i> Memari, Burdwan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal reveal-delay-2">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-service">Full Construction</span>
+          <p class="testi-quote">I had been cheated by a contractor before — wrong materials, delays, extra bills. ND Construction restored my faith. Everything was written and agreed upfront. They worked 6 days a week, kept me updated with photos, and handed over a house I'm proud to call my own. Worth every paisa.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">AD</div>
+            <div>
+              <div class="testi-name">Asim Kumar Das</div>
+              <div class="testi-loc"><i class="fa-solid fa-location-dot"></i> Kalna, Burdwan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-service">Roof Repair &amp; Waterproofing</span>
+          <p class="testi-quote">Every monsoon, my roof leaked and I would panic. I had tried 2 other contractors — both failed. ND Construction found the actual source of the problem, fixed it properly, and we've had zero leaks for 2 years now. They came back to check once, free of charge. Real professionals.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">MM</div>
+            <div>
+              <div class="testi-name">Mamata Mondal</div>
+              <div class="testi-loc"><i class="fa-solid fa-location-dot"></i> Katwa, Burdwan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal reveal-delay-1">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-service">2-Storey House Build</span>
+          <p class="testi-quote">Building a 2-storey house is the biggest decision of your life. I'm so glad I chose ND Construction. The structure is rock solid, the finishing is beautiful, and they came in under budget. My father, who is a retired engineer, inspected the work and said it was done the right way. Highest recommendation.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">TB</div>
+            <div>
+              <div class="testi-name">Tapas Bose</div>
+              <div class="testi-loc"><i class="fa-solid fa-location-dot"></i> Galsi, Burdwan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal reveal-delay-2">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-service">Tiles, Electrical &amp; Plumbing</span>
+          <p class="testi-quote">We hired ND Construction for tiling, electrical and plumbing in our new flat. They coordinated all three perfectly — no delays, no confusion. The electrical work especially is very safe and neatly done. I feel secure knowing my family is in a properly built home.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">RG</div>
+            <div>
+              <div class="testi-name">Rekha Ghosh</div>
+              <div class="testi-loc"><i class="fa-solid fa-location-dot"></i> Ausgram, Burdwan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:42px;">
+        <p style="color:var(--clr-muted);font-size:.9rem;margin-bottom:14px;">Want to speak with a past client before deciding? We'll arrange a reference call.</p>
+        <a href="https://wa.me/917797725755?text=Hello%20ND%20Construction.%20I%27d%20like%20to%20speak%20with%20a%20past%20client%20before%20deciding." target="_blank" class="btn btn--outline"><i class="fa-brands fa-whatsapp"></i> Request a Client Reference</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INSIGHTS
+       ============================================================ -->
+  <section id="insights" class="section">
+    <div class="container">
+      <div class="section-header section-header--center">
+        <span class="tag">Insights</span>
+        <h2 class="section-title">Thinking about building <em>in Burdwan?</em></h2>
+        <p class="section-sub">Practical, honest guidance for families planning a home build or renovation. Written by people who actually do the work.</p>
+      </div>
+
+      <div class="insights-grid">
+        <article class="insight-card reveal">
+          <div class="insight-img">
+            <img src="assets/img7.png" alt="Cost of construction in Burdwan" loading="lazy" />
+          </div>
+          <div class="insight-body">
+            <div class="insight-meta"><span>Guide</span> · 8 min read</div>
+            <h3 class="insight-title">How much does it really cost to build a house in Burdwan in 2026?</h3>
+            <p class="insight-excerpt">An honest breakdown of construction costs per square foot in Purba Bardhaman — what affects the number, what's included, and what most contractors don't tell you.</p>
+            <a href="#" class="insight-link">Read the guide <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="insight-card reveal reveal-delay-1">
+          <div class="insight-img">
+            <img src="assets/a1.png" alt="Questions to ask a contractor" loading="lazy" />
+          </div>
+          <div class="insight-body">
+            <div class="insight-meta"><span>Checklist</span> · 5 min read</div>
+            <h3 class="insight-title">5 questions to ask any contractor before signing in Burdwan</h3>
+            <p class="insight-excerpt">The questions that expose inexperience fast — and the ones every serious contractor will answer without hesitation. A practical pre-hire checklist.</p>
+            <a href="#" class="insight-link">Read the checklist <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="insight-card reveal reveal-delay-2">
+          <div class="insight-img">
+            <img src="assets/a4.png" alt="RCC vs load-bearing structure" loading="lazy" />
+          </div>
+          <div class="insight-body">
+            <div class="insight-meta"><span>Technical</span> · 6 min read</div>
+            <h3 class="insight-title">RCC frame vs load-bearing: what we recommend and why</h3>
+            <p class="insight-excerpt">Why almost every modern home in West Bengal is built on an RCC frame — and the situations where a different structural choice actually makes sense.</p>
+            <a href="#" class="insight-link">Read the technical brief <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FAQ
+       ============================================================ -->
+  <section id="faq" class="section section--warm">
+    <div class="container">
+      <div class="faq-grid">
+        <div>
+          <span class="tag">Frequently Asked</span>
+          <h2 class="section-title">Questions <em>families ask us</em> before signing.</h2>
+          <p class="section-sub" style="margin-bottom:24px;">If your question isn't here, call or WhatsApp us — we answer within one business day.</p>
+          <a href="tel:+917797725755" class="btn btn--outline"><i class="fa-solid fa-phone"></i> +91 77977 25755</a>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item open">
+            <button class="faq-question">Do you handle permits and municipal approvals? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer">Yes. We assist with the documentation and drawings required for municipal / panchayat approvals. Final submission is the owner's responsibility, but we prepare everything else.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">What does your written estimate include? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer">Every estimate is itemized into materials, labour, and a stage-wise timeline. Quantities, rates, and the scope of work are all written — so you can verify and compare line by line, not just the bottom number.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">How are payments structured? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer">Payments are tied to construction milestones — typically foundation, lintel, roof structure, plastering, and finishing. You pay for completed work, and the schedule is written into the contract before we start.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Do you use subcontractors? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer">No. Our masons, painters, plumbers, electricians and tilers are full-time employees of ND Construction Pvt Ltd. They are trained on our methods, supervised by our project managers, and accountable to our company.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">What warranty do you provide? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer">Every ND Construction build carries a 5-year structural warranty. Specific items (waterproofing, fixtures, finishes) carry their own warranty terms, all documented at handover.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">How long does a typical home build take? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer">A standard 2BHK/3BHK home typically takes 6-9 months from foundation to handover, depending on size, design complexity, and monsoon impact. The exact timeline is in your contract.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Do you work outside Burdwan district? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer">We primarily serve Burdwan and a 40km radius — Goda, Memari, Kalna, Katwa, Galsi, Ausgram, and Durgapur. For projects beyond this radius, please call us to discuss.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT / CONSULTATION
+       ============================================================ -->
+  <section id="contact" class="section section--dark">
+    <div class="container">
+      <div class="section-header section-header--center">
+        <span class="tag">Schedule a Consultation</span>
+        <h2 class="section-title" style="color:#fff;">Let's discuss your project.</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,.65);">Call, WhatsApp, or send a message. We'll respond within one business day with next steps and a proposed site visit.</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="ci-icon"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <div class="ci-label">Call (fastest)</div>
+              <div class="ci-value"><a href="tel:+917797725755">+91 77977 25755</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <div class="ci-label">WhatsApp</div>
+              <div class="ci-value"><a href="https://wa.me/917797725755?text=Hello%20ND%20Construction.%20I%27d%20like%20to%20discuss%20a%20project." target="_blank">Send a message →</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <div class="ci-label">Email</div>
+              <div class="ci-value"><a href="mailto:contact@ndconstruction.in">contact@ndconstruction.in</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <div class="ci-label">Office</div>
+              <div class="ci-value">Goda Main Road, Burdwan<br/>West Bengal 713103, India</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon"><i class="fa-solid fa-clock"></i></div>
+            <div>
+              <div class="ci-label">Working hours</div>
+              <div class="ci-value">Monday – Saturday · 8:00 AM – 7:00 PM</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon"><i class="fa-solid fa-map"></i></div>
+            <div>
+              <div class="ci-label">Service coverage</div>
+              <div class="ci-value">40km radius of Burdwan · Purba Bardhaman</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-card">
+          <h3>Tell us about your project</h3>
+          <p class="form-sub">We respond within one business day. No spam, no sharing.</p>
+
+          <form id="consultForm" novalidate>
+            <div class="form-group">
+              <label for="c-name">Your Name <span>*</span></label>
+              <input class="form-input" type="text" id="c-name" name="name" placeholder="E.g. Ananya Sen" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="c-phone">Phone Number <span>*</span></label>
+              <input class="form-input" type="tel" id="c-phone" name="phone" placeholder="10-digit mobile" required autocomplete="tel" maxlength="10" inputmode="numeric" />
+            </div>
+            <div class="form-group">
+              <label for="c-email">Email (optional)</label>
+              <input class="form-input" type="email" id="c-email" name="email" placeholder="you@example.com" autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label for="c-site">Project location</label>
+              <input class="form-input" type="text" id="c-site" name="site" placeholder="E.g. Memari, Burdwan" />
+            </div>
+            <div class="form-group">
+              <label for="c-type">Type of project <span>*</span></label>
+              <select class="form-select" id="c-type" name="type" required>
+                <option value="" disabled selected>Select project type</option>
+                <option value="new-construction">New home construction</option>
+                <option value="renovation">Renovation / remodeling</option>
+                <option value="painting">Painting (interior / exterior)</option>
+                <option value="bathroom">Bathroom renovation</option>
+                <option value="kitchen">Kitchen renovation</option>
+                <option value="flooring">Flooring &amp; tiling</option>
+                <option value="electrical">Electrical work</option>
+                <option value="plumbing">Plumbing</option>
+                <option value="maintenance">Maintenance / repair</option>
+                <option value="other">Other / not sure yet</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="c-notes">Project details (optional)</label>
+              <textarea class="form-textarea" id="c-notes" name="notes" placeholder="Site size, current stage, timeline, anything that helps us prepare."></textarea>
+            </div>
+
+            <button type="submit" class="form-submit">
+              <i class="fa-solid fa-paper-plane"></i> Request a Consultation
             </button>
+            <p class="form-privacy"><i class="fa-solid fa-lock"></i> Your details are safe with us. We never share or spam.</p>
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h4>Request received.</h4>
+            <p>Our team will reach out within one business day. For a faster reply, you can WhatsApp us directly.</p>
+            <a href="https://wa.me/917797725755?text=Hello%20ND%20Construction.%20I%20just%20submitted%20a%20consultation%20request%20on%20your%20website." target="_blank" class="btn btn--whatsapp" style="justify-content:center;"><i class="fa-brands fa-whatsapp"></i> Open WhatsApp</a>
+          </div>
         </div>
+
+      </div>
     </div>
+  </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // Set Date
-            document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
 
-            // Subject Logic
-            const chips = document.querySelectorAll('.subject-chip');
-            const subjectInput = document.getElementById('selectedSubjects');
-            const subjectError = document.getElementById('subjectError');
+        <div class="footer-brand">
+          <a href="#hero" class="nav-logo" style="display:inline-flex;">
+            <div class="logo-mark" style="background:var(--clr-accent);">ND</div>
+            <div>
+              <div class="logo-text">ND Construction<span>Pvt Ltd · Est. 2010</span></div>
+            </div>
+          </a>
+          <p>Engineer-supervised residential construction, renovation, and finishing across Burdwan and Purba Bardhaman. Built on milestone contracts. Backed by a 5-year structural warranty.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/ndconstruction" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/ndconstruction" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://wa.me/917797725755" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/company/ndconstruction" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://maps.app.goo.gl/BL8PMg2KzyfycX6w9" target="_blank" rel="noopener" aria-label="Google Maps"><i class="fa-brands fa-google"></i></a>
+          </div>
+        </div>
 
-            chips.forEach(chip => {
-                chip.addEventListener('click', () => {
-                    chip.classList.toggle('selected');
-                    if (navigator.vibrate) navigator.vibrate(10);
-                    
-                    const selected = Array.from(chips).filter(c => c.classList.contains('selected')).map(c => c.dataset.value);
-                    subjectInput.value = selected.join(', ');
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services"><i class="fa-solid fa-chevron-right"></i> New Home Construction</a></li>
+            <li><a href="#services"><i class="fa-solid fa-chevron-right"></i> Renovation</a></li>
+            <li><a href="#services"><i class="fa-solid fa-chevron-right"></i> Interior Finishing</a></li>
+            <li><a href="#services"><i class="fa-solid fa-chevron-right"></i> Painting</a></li>
+            <li><a href="#services"><i class="fa-solid fa-chevron-right"></i> Bathroom &amp; Kitchen</a></li>
+            <li><a href="#services"><i class="fa-solid fa-chevron-right"></i> Maintenance</a></li>
+          </ul>
+        </div>
 
-                    if(selected.length > 0) {
-                        subjectError.classList.remove('visible');
-                    }
-                });
-            });
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about"><i class="fa-solid fa-chevron-right"></i> About ND Construction</a></li>
+            <li><a href="#team"><i class="fa-solid fa-chevron-right"></i> Our Team</a></li>
+            <li><a href="#projects"><i class="fa-solid fa-chevron-right"></i> Projects</a></li>
+            <li><a href="#process"><i class="fa-solid fa-chevron-right"></i> How We Work</a></li>
+            <li><a href="#insights"><i class="fa-solid fa-chevron-right"></i> Insights</a></li>
+            <li><a href="#faq"><i class="fa-solid fa-chevron-right"></i> FAQ</a></li>
+          </ul>
+        </div>
 
-            // Validation Logic with Visual Feedback
-            const form = document.getElementById('admissionForm');
-            const inputs = form.querySelectorAll('input, select, textarea');
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+917797725755"><i class="fa-solid fa-phone"></i> +91 77977 25755</a></li>
+            <li><a href="mailto:contact@ndconstruction.in"><i class="fa-solid fa-envelope"></i> contact@ndconstruction.in</a></li>
+            <li><a href="https://wa.me/917797725755" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Us</a></li>
+            <li><i class="fa-solid fa-location-dot"></i> Goda Main Road, Burdwan</li>
+            <li><i class="fa-solid fa-map"></i> 40km service radius</li>
+            <li><i class="fa-solid fa-clock"></i> Mon–Sat · 8 AM – 7 PM</li>
+          </ul>
+        </div>
 
-            // Helper: Set Valid State
-            const setValid = (input) => {
-                const group = input.closest('.input-group');
-                if(group) {
-                    group.classList.remove('is-error');
-                    if(input.value.trim() !== '') group.classList.add('is-valid');
-                    else group.classList.remove('is-valid');
-                }
-            };
+      </div>
 
-            // Helper: Set Error State
-            const setError = (input) => {
-                const group = input.closest('.input-group');
-                if(group) {
-                    group.classList.remove('is-valid');
-                    group.classList.add('is-error');
-                }
-            };
+      <div class="footer-bottom">
+        <div>© 2010–2026 ND Construction Pvt Ltd. All rights reserved.</div>
+        <div>Burdwan · Purba Bardhaman · West Bengal</div>
+      </div>
+    </div>
+  </footer>
 
-            // Real-time Validation on Input
-            inputs.forEach(input => {
-                input.addEventListener('input', () => {
-                    const group = input.closest('.input-group');
-                    if(group.classList.contains('is-error')) {
-                        group.classList.remove('is-error');
-                    }
-                    if(input.checkValidity()) setValid(input);
-                });
+  <!-- ============================================================
+       WHATSAPP FAB
+       ============================================================ -->
+  <a href="https://wa.me/917797725755?text=Hello%20ND%20Construction.%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener" class="whatsapp-fab" aria-label="Chat on WhatsApp">
+    <div class="fab-pulse"></div>
+    <svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M16 2C8.268 2 2 8.268 2 16c0 2.477.641 4.804 1.765 6.828L2 30l7.364-1.737A13.93 13.93 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.4a11.36 11.36 0 01-5.795-1.59l-.416-.248-4.366 1.03 1.058-4.27-.273-.44A11.35 11.35 0 014.6 16C4.6 9.704 9.704 4.6 16 4.6S27.4 9.704 27.4 16 22.296 27.4 16 27.4zm6.22-8.51c-.34-.17-2.012-.993-2.324-1.105-.311-.113-.537-.17-.763.17-.226.34-.876 1.105-1.074 1.332-.197.226-.395.255-.735.085-.34-.17-1.435-.53-2.733-1.69-1.01-.9-1.692-2.012-1.89-2.352-.197-.34-.021-.523.149-.693.153-.152.34-.397.51-.595.17-.197.226-.34.34-.566.113-.226.056-.424-.028-.595-.085-.17-.763-1.842-1.046-2.52-.275-.662-.556-.572-.763-.582l-.65-.011c-.226 0-.594.085-.905.424-.311.34-1.188 1.162-1.188 2.833 0 1.672 1.217 3.288 1.386 3.515.17.226 2.395 3.658 5.802 5.128.81.35 1.443.559 1.936.715.814.26 1.556.223 2.141.135.653-.098 2.012-.823 2.296-1.617.283-.793.283-1.474.198-1.617-.085-.142-.311-.226-.651-.396z"/>
+    </svg>
+  </a>
 
-                input.addEventListener('blur', () => {
-                    if(input.required && !input.value.trim()) {
-                        setError(input);
-                    } else if (input.pattern && input.value) {
-                        const regex = new RegExp(input.pattern);
-                        if(!regex.test(input.value)) setError(input);
-                        else setValid(input);
-                    } else {
-                        setValid(input);
-                    }
-                });
-            });
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
 
-            // Elements for API interaction
-            const submitBtn = document.getElementById('submitBtn');
-            const guardianPhone = document.getElementById('guardianPhone');
-            
-            // Modal Elements
-            const modal = document.getElementById('responseModal');
-            const modalCard = document.getElementById('modalCard');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalMsg = document.getElementById('modalMsg');
-            const modalBtn = document.getElementById('modalBtn');
+  <div class="sticky-cta">
+    <a href="tel:+917797725755" class="cta-btn cta-call"><i class="fa-solid fa-phone"></i> Call</a>
+    <a href="https://wa.me/917797725755" class="cta-btn cta-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  </div>
 
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                let isValid = true;
+  <div class="toast-container" id="toastContainer"></div>
 
-                // Validate Inputs
-                inputs.forEach(input => {
-                    if(input.required && !input.value.trim()) {
-                        setError(input);
-                        isValid = false;
-                    } else if (input.pattern && input.value) {
-                        const regex = new RegExp(input.pattern);
-                        if(!regex.test(input.value)) {
-                            setError(input);
-                            isValid = false;
-                        }
-                    }
-                });
+  <script>
+    // ============== Toast ==============
+    function showToast(title, message, type) {
+      type = type || 'info';
+      const container = document.getElementById('toastContainer');
+      const icons = { success: '<i class="fa-solid fa-circle-check"></i>', error: '<i class="fa-solid fa-circle-exclamation"></i>', info: '<i class="fa-solid fa-info"></i>' };
+      const toast = document.createElement('div');
+      toast.className = 'toast toast-' + type;
+      toast.innerHTML = '<div class="toast-icon">' + (icons[type] || icons.info) + '</div><div class="toast-content"><div class="toast-title">' + title + '</div><div class="toast-message">' + message + '</div></div><button class="toast-close" onclick="this.parentElement.remove()">×</button>';
+      container.appendChild(toast);
+      setTimeout(function(){ toast.classList.add('show'); }, 10);
+      setTimeout(function(){
+        toast.classList.remove('show');
+        setTimeout(function(){ toast.remove(); }, 400);
+      }, 5000);
+    }
 
-                // Validate Subjects
-                if(!subjectInput.value) {
-                    subjectError.classList.add('visible');
-                    isValid = false;
-                }
+    // ============== Navbar scroll ==============
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function(){
+      navbar.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
 
-                if(!isValid) {
-                    submitBtn.style.animation = 'shake 0.3s ease';
-                    setTimeout(() => submitBtn.style.animation = '', 300);
-                    return;
-                }
+    // ============== Mobile nav ==============
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav    = document.getElementById('mobileNav');
+    let navOpen = false;
+    hamburgerBtn.addEventListener('click', function(){
+      navOpen = !navOpen;
+      mobileNav.classList.toggle('open', navOpen);
+      hamburgerBtn.classList.toggle('active', navOpen);
+      document.body.style.overflow = navOpen ? 'hidden' : '';
+    });
+    function closeMobileNav(){
+      navOpen = false;
+      mobileNav.classList.remove('open');
+      hamburgerBtn.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && navOpen) closeMobileNav();
+    });
 
-                // -------------------------------------------------------
-                //       API SENDING PROCESS (User Requested Logic)
-                // -------------------------------------------------------
-
-                // Convert comma-separated string from chips to Array of Uppercase strings
-                const subjectsArray = document.getElementById('selectedSubjects').value.split(', ').map(s => s.toUpperCase());
-
-                const formData = {
-                    name: document.getElementById('studentName').value.trim(),
-                    className: document.getElementById('studentClass').value,
-                    school: document.getElementById('schoolName').value.trim(),
-                    subjects: subjectsArray,
-                    dob: document.getElementById('dob').value ? new Date(document.getElementById('dob').value).getTime() : null,
-                    admissionDate: new Date(document.getElementById('admissionDate').value).getTime(),
-                    guardianName: document.getElementById('guardianName').value.trim(),
-                    guardianPhone: guardianPhone.value.trim(),
-                    studentPhone: document.getElementById('studentPhone').value.trim(),
-                    address: document.getElementById('address').value.trim(),
-                    fees: parseFloat(document.getElementById('fees').value) || 0
-                };
-
-                submitBtn.disabled = true;
-                const submitIcon = document.getElementById('submit-icon');
-                const submitText = document.getElementById('submit-text');
-                submitIcon.style.display = 'none';
-                submitText.innerHTML = '<div class="spinner"></div>';
-
-                try {
-                    const res = await fetch('https://arts-academy.onrender.com/api/admissions', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-
-                    if (!res.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-
-                    // Show Success Modal
-                    showSuccessModal();
-
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    // Show Error Modal
-                    showErrorModal();
-                } finally {
-                    // Reset Button State
-                    submitBtn.disabled = false;
-                    submitIcon.style.display = 'block';
-                    submitText.innerHTML = 'Submit Application';
-                }
-            });
-
-            // Function to show Success Modal
-            function showSuccessModal() {
-                modalCard.classList.remove('error');
-                modalTitle.textContent = "Success!";
-                modalMsg.textContent = "Admission received. Our team will contact you shortly.";
-                modalBtn.textContent = "Done";
-                modalBtn.onclick = () => {
-                    modal.classList.remove('active');
-                    window.location.reload(); 
-                };
-                modal.classList.add('active');
-            }
-
-            // Function to show Error Modal
-            function showErrorModal() {
-                modalCard.classList.add('error');
-                modalTitle.textContent = "Submission Failed";
-                modalMsg.textContent = "There was an error sending your application. Please try again or call us.";
-                modalBtn.textContent = "Close";
-                modalBtn.onclick = () => {
-                    modal.classList.remove('active');
-                };
-                modal.classList.add('active');
-            }
+    // ============== Reveal on scroll ==============
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
         });
-    </script>
+      }, { threshold: 0.1 });
+      reveals.forEach(function(el){ obs.observe(el); });
+    } else {
+      reveals.forEach(function(el){ el.classList.add('visible'); });
+    }
+
+    // ============== FAQ ==============
+    document.querySelectorAll('.faq-question').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // ============== Phone input ==============
+    const phoneInput = document.getElementById('c-phone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function(){
+        this.value = this.value.replace(/\D/g, '').slice(0, 10);
+      });
+    }
+
+    // ============== Consultation form ==============
+    const consultForm = document.getElementById('consultForm');
+    const formSuccess = document.getElementById('formSuccess');
+    if (consultForm) {
+      consultForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        const name  = document.getElementById('c-name').value.trim();
+        const phone = document.getElementById('c-phone').value.trim();
+        const email = document.getElementById('c-email').value.trim();
+        const site  = document.getElementById('c-site').value.trim();
+        const type  = document.getElementById('c-type').value;
+        const notes = document.getElementById('c-notes').value.trim();
+
+        if (!name || name.length < 2) {
+          showToast('Name required', 'Please enter your name to continue.', 'error');
+          return;
+        }
+        if (!phone || !/^[6-9]\d{9}$/.test(phone)) {
+          showToast('Invalid phone', 'Please enter a valid 10-digit Indian mobile number.', 'error');
+          return;
+        }
+        if (!type) {
+          showToast('Select project type', 'Please tell us what kind of project this is.', 'error');
+          return;
+        }
+
+        const waMsg = encodeURIComponent(
+          '*Consultation Request — ND Construction Pvt Ltd*\n\n' +
+          '*Name:* ' + name + '\n' +
+          '*Phone:* ' + phone + '\n' +
+          (email ? '*Email:* ' + email + '\n' : '') +
+          (site ? '*Site:* ' + site + '\n' : '') +
+          '*Project type:* ' + type + '\n' +
+          (notes ? '*Notes:* ' + notes + '\n' : '') +
+          '\nPlease contact me to discuss further.'
+        );
+
+        consultForm.style.display    = 'none';
+        formSuccess.style.display = 'block';
+        showToast('Request received', 'We will reach out within one business day.', 'success');
+
+        setTimeout(function(){
+          window.open('https://wa.me/917797725755?text=' + waMsg, '_blank');
+        }, 800);
+      });
+    }
+
+    // ============== Back to top ==============
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', function(){
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+    backToTop.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ============== Smooth anchor scroll ==============
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        const href = a.getAttribute('href');
+        if (href === '#' || href === '') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
